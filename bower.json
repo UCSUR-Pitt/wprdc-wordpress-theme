@@ -1,0 +1,8 @@
+{
+    "name": "WPRDC",
+    "version": "0.0.1",
+    "devDependencies": {
+        "foundation": "latest"
+    },
+    "private": "true"		
+}

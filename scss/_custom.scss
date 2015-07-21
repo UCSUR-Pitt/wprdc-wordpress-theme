@@ -1,0 +1,110 @@
+//
+
+// Table of Contents
+// Settings
+//
+// 01. Main Content
+// 02. Latest Tweets
+// 03. Footer
+
+//
+
+// 01. Main Content
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+#main-content-wrapper {
+  background: white;
+  .interchange {
+    background: transparent repeat-x;
+  }
+  .content-spacer {
+    padding: 15px 0px 35px 0px;
+  }
+  .content-container {
+    padding: 25px 0px;
+    &.white {
+      background: $white;
+    }
+    &.light-blue {
+      background: $wprdc-blue;
+    }
+    &.smoke {
+      background: $smoke;
+    }
+    &.oil {
+      background: $oil;
+    }
+    &.jet {
+      background: $jet;
+    }
+  }
+  .button.postfix {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-align: center;
+  }
+}
+
+// 02. Latest Tweets
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+#latest-tweets {
+  background: $wprdc-blue;
+  padding: 15px 0px 10px 0px;
+  .twitter-info {
+    margin-bottom: 5px;
+    font-size: 1.6875rem;
+  }
+  .orbit-container li p {
+    background: $wprdc-blue;
+    margin-bottom: 0;
+    a {
+      color: $white;
+      &:hover {
+        color: scale-color($white, $lightness: -5%);
+        text-decoration: underline;
+      }
+    }
+  }
+  .orbit-bullets {
+    margin: 0 auto 15px auto;
+  }
+  .orbit-timer {
+    display: none;
+  }
+  .follow-info {
+    p {
+      font-size: 9.5pt;
+      margin-bottom: 0;
+    }
+    a {
+      color: $white;
+      &:hover {
+        color: scale-color($white, $lightness: -5%);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// 03. Footer
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+#footer {
+  .sub-footer {
+    padding: 15px 0px 10px 0px;
+    background: $oil;
+    color: $iron;
+    .footer-title {
+      margin-bottom: 0px;
+      font-size: 1.6875rem;
+    }
+  }
+  .legal {
+    background: $jet;
+    color: $steel;
+    p {
+      font-size: 9.5pt;
+      margin: 7px 0px 5px;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "WPRDC",
+    "domain": "wprdc",
+    "version": "0.0.1",
+    "author": {
+        "name": "Koury Lape",
+        "url": "http://ucsur.pitt.edu"
+    },
+    "devDependencies": {
+        "grunt": "latest",
+        "grunt-contrib-watch": "latest",
+        "grunt-sass": "latest",
+        "grunt-sync": "latest",
+        "load-grunt-tasks": "latest",
+        "time-grunt": "latest"
+    },
+    "private": "true"		
+}
+
