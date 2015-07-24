@@ -13,6 +13,10 @@ A custom Wordpress theme for the Western Pennsylvania Regional Data Center.
 Copy the contents of the `dist` folder to a new directory in your Wordpress themes directory (`wp-content/themes/`).
 
 ### Development Installation
-1. `bower install && npm install && grunt build`
-2. Create a symlink from the `dist` folder to your Wordpress themes directory
+
+The grunt command `sync:wordpress` assumes that WordPress is installed in the `public` directory. This works best with a virtual host/directory. After WordPress is installed to the `public` directory, you can setup the development environment by running:
+
+`bower install && npm install && grunt build && grunt watch`
+
+With `grunt watch` running, any changes to the `dist` directory will be pushed to `public/wp-content/themes/wprdc/`.
 

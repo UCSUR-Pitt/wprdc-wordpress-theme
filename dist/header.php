@@ -42,7 +42,7 @@
                     'menu' => '',                                    // menu name
                     'menu_class' => 'right',                        // adding custom nav class
                     'theme_location' => 'main-navigation',          // where it's located in the theme
-                    'depth' => 2,                                   // limit the depth of the nav
+                    'depth' => 3,                                   // limit the depth of the nav
                     'walker' => new ThemeWalker()
                 ));
             }

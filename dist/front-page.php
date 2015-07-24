@@ -77,7 +77,7 @@ get_header(); ?>
                 <?php if(!$res->private) : ?>
                     <div class="medium-4 columns">
                         <h5><a href="<?php echo esc_url( ckan_url('dataset/'.$res->name) ); ?>"><?php echo $res->title; ?></a></h5>
-                        <p><?php echo $res->notes; ?>.</p>
+                        <p><?php echo wp_trim_words($res->notes, 50); ?></p>
                         <?php foreach($res->resources as $resource) : ?>
                             <?php if($resource->format) : ?>
                                 <a href="<?php echo esc_url( ckan_url('dataset/'.$res->name) ); ?>"><span class="label"><?php echo $resource->format; ?></span></a>
