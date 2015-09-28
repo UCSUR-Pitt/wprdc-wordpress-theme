@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css"/>
     <script src="<?php echo get_template_directory_uri(); ?>/assets/js/modernizr.js"></script>
-    <?php wp_enqueue_script('jquery'); ?>
 </head>
     <?php wp_head(); ?>
 <body>

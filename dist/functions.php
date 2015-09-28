@@ -11,6 +11,14 @@ function theme_init() {
         // Add Option for Theme Initialized
         add_option('wprdc_theme_setup_ran', "true");
     }
+
+    // Allow Thumbnails/Featured Images
+    add_theme_support( 'post-thumbnails' );
+
+    // Add Custom JS in Footer
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('foundation', get_template_directory_uri() . '/assets/js/foundation.min.js', array('jquery'), '5.0', true);
+    wp_enqueue_script('wprdc', get_template_directory_uri() . '/assets/js/app.js', array('jquery'), '0.0.1', true);
 }
 add_action( 'after_setup_theme', 'theme_init' );
 
@@ -76,7 +84,7 @@ function enable_php_errors()
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
-//enable_php_errors();
+enable_php_errors();
 
 /**
  * Retrieve a response from the CKAN API using the GET method
@@ -87,18 +95,26 @@ function enable_php_errors()
  */
 function ckan_api_get($url, $args = array())
 {
-    $ckan_url = get_option('wprdc_theme_setting_ckan', 'http://opendata.ucsur.pitt.edu/data');
-    $url = esc_url($ckan_url . '/api/3/' . $url);
-    $response = wp_remote_get($url, $args);
-    $body = json_decode( wp_remote_retrieve_body($response) );
+    $cache_key = $url;
+    if( !wincache_ucache_exists($cache_key) )
+    {
+        $ckan_url = get_option('wprdc_theme_setting_ckan', 'http://opendata.ucsur.pitt.edu/data');
+        $url = esc_url_raw($ckan_url . '/api/3/' . $url);
+        $response = wp_remote_get($url, $args);
+        $body = json_decode(wp_remote_retrieve_body($response));
 
-    if ( wp_remote_retrieve_response_code($response) === 200 )
-        if ( isset($body->result) )
-            return $body->result;
+        if (wp_remote_retrieve_response_code($response) === 200)
+            if (isset($body->result))
+                $result = $body->result;
+            else
+                $result = $body;
         else
-            return $body;
-    else
-        return false;
+            $result = false;
+
+        wincache_ucache_set($cache_key,$result,1800);
+    }
+
+    return wincache_ucache_get($cache_key);
 }
 
 /**
@@ -124,3 +140,9 @@ require get_template_directory() . '/scripts/Twitter.php';
  * Enable ThemeWalker script to be accessed on scripts
  */
 require get_template_directory() . '/scripts/ThemeWalker.php';
+
+
+/**
+ * Enable Newsletter script to be accessed via AJAX
+ */
+require get_template_directory() . '/scripts/Newsletter.php';

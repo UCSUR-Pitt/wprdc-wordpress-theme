@@ -41,7 +41,7 @@ get_header(); ?>
             <p class="text-center"><?php echo $response->count; ?> dataset<?php echo ($response->count > 1 ? 's' : ''); ?> and growing</p>
         <?php endif; ?>
         <div class="small-6 columns">
-            <h4>Topics/Groups</h4>
+            <h4>Groups/Topics</h4>
             <ul class="large-block-grid-2 small-block-grid-1">
                 <?php if($response = ckan_api_get("action/group_list?all_fields=true")) : ?>
                     <?php foreach($response as $group) : ?>
@@ -70,25 +70,20 @@ get_header(); ?>
 
 <!-- Recent Updates -->
 <div class="content-container smoke">
-    <h3 class="text-center">Recently Updated Datasets</h3>
+    <h3 class="text-center">Most Recently Viewed Datasets</h3>
     <div class="row">
-        <?php if($response = ckan_api_get("action/current_package_list_with_resources?limit=3")) : ?>
-            <?php foreach($response as $res) : ?>
+        <?php if($response = ckan_api_get("action/package_search?sort=views_total%20desc&rows=3")) : ?>
+            <?php foreach($response->results as $res) : ?>
                 <?php if(!$res->private) : ?>
                     <div class="medium-4 columns">
                         <h5><a href="<?php echo esc_url( ckan_url('dataset/'.$res->name) ); ?>"><?php echo $res->title; ?></a></h5>
-                        <p><?php echo wp_trim_words($res->notes, 50); ?></p>
-                        <?php foreach($res->resources as $resource) : ?>
-                            <?php if($resource->format) : ?>
-                                <a href="<?php echo esc_url( ckan_url('dataset/'.$res->name) ); ?>"><span class="label"><?php echo $resource->format; ?></span></a>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                        <p><?php echo wp_trim_words($res->notes, 35); ?></p>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php else : ?>
-            <div class="medium-4 columns">
-                <p>No datasets are currently available.</p>
+            <div class="medium-12 columns text-center">
+                <p>Sorry, we couldn't fetch the most popular datasets at this time.</p>
             </div>
         <?php endif; ?>
     </div>
@@ -100,7 +95,7 @@ get_header(); ?>
     <div class="row">
         <div class="large-12 columns">
             <h3>Latest WPRDC News</h3>
-            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 5), OBJECT) ) : ?>
+            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 5, 'category__not_in' => get_cat_ID('showcase')), OBJECT) ) : ?>
                 <?php foreach($posts as $post) : ?>
                     <div id="post-<?php echo $post-ID; ?>">
                         <h4><a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
@@ -117,30 +112,84 @@ get_header(); ?>
 </div>
 
 <!-- API Section -->
-<div class="content-container smoke">
-    <div class="row text-center">
-        <h3>Build something amazing with our data!</h3>
-        <p>Using CKAN and the WPRDC's API, you have direct access to the datasets published to create applications and extend data.</p>
-        <a href="http://docs.ckan.org/en/ckan-2.3/api/index.html" class="button">Learn More</a>
-    </div>
-</div>
-
-
-<!-- Partners Section -->
-<div class="content-container white">
-    <div class="row">
-        <div class="large-12 columns">
-            <h3 class="text-center">Project Partners</h3>
-            <ul class="large-block-grid-3 medium-block-grid-2 small-block-grid-1">
-                <li><a target="_blank" href="http://foundationcenter.org/grantmaker/rkmellon/">Richard King Mellon Foundation</a></li>
-                <li><a target="_blank" href="http://www.pitt.edu/">University of Pittsburgh</a></li>
-                <li><a target="_blank" href="http://www.alleghenycounty.us/">Allegheny County</a></li>
-                <li><a target="_blank" href="http://pittsburghpa.gov/">The City of Pittsburgh</a></li>
-                <li><a target="_blank" href="http://www.cmu.edu/">Carnegie Mellon University</a></li>
-            </ul>
+<div class="content-container light-blue">
+    <div class="row valign-middle">
+        <div class="medium-9 columns">
+            <h3>Build something amazing with our data!</h3>
+            <p>Using the WPRDC's API, you have direct access to the published datasets to create applications.</p>
+        </div>
+        <div class="medium-3 columns text-center">
+            <a href="http://ckan.readthedocs.org/en/ckan-2.4.0/api/index.html" target="_blank" class="button secondary no-margin">Learn More</a>
         </div>
     </div>
 </div>
+
+<!-- Showcase Section -->
+<div class="content-container white">
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>WPRDC Showcase</h3>
+            <p>See what others have created using our data.</p>
+            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 10, 'category' => get_cat_ID('showcase')), OBJECT) ) : ?>
+            <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-5">
+                <?php foreach($posts as $post) : ?>
+                    <?php if ( has_post_thumbnail() ) : ?>
+                        <li id="post-<?php echo $post-ID; ?>">
+                            <a href="<?php echo get_permalink($post->ID); ?>" class="th">
+                                <?php the_post_thumbnail('thumbnail'); ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </ul>
+            <?php else : ?>
+                <div id="no-posts">
+                    <p>Nothing has been posted yet.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Data Request -->
+<div class="content-container smoke">
+    <div class="row valign-middle">
+        <div class="medium-9 columns">
+            <h3>What dataset would you like to see?</h3>
+            <p>Do you have an idea for a dataset that you would like to see?</p>
+        </div>
+        <div class="medium-3 columns text-center">
+            <a href="<?php echo esc_url( ckan_url('datarequest') ); ?>" class="button no-margin">Request a Dataset</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Newsletter Section -->
+<div class="content-container white">
+    <div class="row text-center">
+        <div class="large-12 columns">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/newsletter.png" />
+        <h3>Join Our Newsletter!</h3>
+        <p>Sign up to our newsletter list to stay updated with news about the WPRDC.</p>
+        <form class="newsletter" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" data-abide="ajax">
+            <?php wp_nonce_field('newsletter-register'); ?>
+            <div class="row collapse">
+                <div class="small-9 columns">
+                    <label for="email">
+                        <input type="email" value="" name="email" placeholder="Your Email Address" required />
+                    </label>
+                    <small class="error">A valid email address is required.</small>
+                </div>
+                <div class="small-3 columns">
+                    <input type="submit" class="button postfix" value="Sign Up" />
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 
 <!-- Latest Tweet Carousel -->
 <div id="latest-tweets">
