@@ -13,7 +13,7 @@ class MailChimp
 {
     private $api_key;
     private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
-    private $verify_ssl   = true;
+    private $verify_ssl   = false;
     /**
      * Create a new instance
      * @param string $api_key Your MailChimp API key

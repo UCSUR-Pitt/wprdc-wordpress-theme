@@ -84,7 +84,7 @@ function enable_php_errors()
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
-enable_php_errors();
+//enable_php_errors();
 
 /**
  * Retrieve a response from the CKAN API using the GET method

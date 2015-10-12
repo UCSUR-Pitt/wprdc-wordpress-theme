@@ -2,6 +2,20 @@
 include_once('MailChimp.php');
 
 /**
+ * Output a Generic JSON Error
+ */
+function output_error()
+{
+    header('Content-type: application/json;');
+    echo json_encode(array(
+        'title' => 'Error!',
+        'lead'  => 'Something went wrong went wrong.',
+        'text'  => 'Please try again later.'
+    ));
+    wp_die();
+}
+
+/**
  * Create a Hook to be used for AJAX calls using 'newsletter_register' action
  *
  * @package WordPress
@@ -13,17 +27,14 @@ function newsletter_register_callback()
 {
 
     if (!check_ajax_referer('newsletter-register', '_wpnonce', false)) {
-        header("HTTP/1.1 403 Forbidden");
-        exit;
+        output_error();
     }
 
     if (!isset($_POST['email']) || empty($_POST['email'])) {
-        header("HTTP/1.1 400 Bad Request");
-        exit;
+        output_error();
     } else {
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            header("HTTP/1.1 400 Bad Request");
-            exit;
+            output_error();
         }
     }
 
@@ -53,7 +64,7 @@ function newsletter_register_callback()
 
     header('Content-type: application/json;');
     echo json_encode($response);
-    exit;
+    wp_die();
 
 }
 add_action('wp_ajax_newsletter_register', 'newsletter_register_callback');

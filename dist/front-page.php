@@ -172,7 +172,7 @@ get_header(); ?>
         <img src="<?php echo get_template_directory_uri(); ?>/assets/img/newsletter.png" />
         <h3>Join Our Newsletter!</h3>
         <p>Sign up to our newsletter list to stay updated with news about the WPRDC.</p>
-        <form class="newsletter" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" data-abide="ajax">
+        <form class="newsletter" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" data-abide="ajax" autocomplete="off">
             <?php wp_nonce_field('newsletter-register'); ?>
             <div class="row collapse">
                 <div class="small-9 columns">
