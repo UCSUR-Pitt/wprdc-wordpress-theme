@@ -57,3 +57,4 @@ function newsletter_register_callback()
 
 }
 add_action('wp_ajax_newsletter_register', 'newsletter_register_callback');
+add_action('wp_ajax_nopriv_newsletter_register', 'newsletter_register_callback');
