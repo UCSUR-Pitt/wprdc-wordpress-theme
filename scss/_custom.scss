@@ -44,6 +44,48 @@
     padding-top: 0;
     text-align: center;
   }
+  .showcase-item {
+    text-align: center;
+    padding: rem-calc(5);
+    img {
+      margin-bottom: rem-calc(3);
+      border: solid 4px #fff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+      display: inline-block;
+      line-height: 0;
+      max-width: 100%;
+    }
+    .showcase-title {
+      font-weight: bold;
+      font-size: rem-calc(13);
+      margin-bottom: rem-calc(3);
+    }
+    .showcase-desc {
+      font-size: rem-calc(10);
+      line-height: rem-calc(12);
+    }
+    .panel {
+      background: $smoke;
+      &:hover {
+        background: $white-smoke;
+      }
+    }
+  }
+  .category-item {
+    @include panel(
+      $bg: $ghost,
+      $padding:20px,
+      $adjust:true
+    );
+    img {
+      margin: rem-calc(0 9 5 0);
+      border: solid 4px #fff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+      display: inline-block;
+      line-height: 0;
+      max-width: 100%;
+    }
+  }
 }
 
 @media #{$medium-up} {

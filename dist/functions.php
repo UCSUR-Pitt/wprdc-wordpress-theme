@@ -19,6 +19,9 @@ function theme_init() {
     wp_enqueue_script('jquery');
     wp_enqueue_script('foundation', get_template_directory_uri() . '/assets/js/foundation.min.js', array('jquery'), '5.0', true);
     wp_enqueue_script('wprdc', get_template_directory_uri() . '/assets/js/app.js', array('jquery'), '0.0.1', true);
+
+    // Add Custom Rewrite Rules
+    add_rewrite_rule('showcase/page/?([0-9]{1,})/?$','index.php?category_name=showcase&paged=$matches[1]','top');
 }
 add_action( 'after_setup_theme', 'theme_init' );
 
@@ -146,3 +149,8 @@ require get_template_directory() . '/scripts/ThemeWalker.php';
  * Enable Newsletter script to be accessed via AJAX
  */
 require get_template_directory() . '/scripts/Newsletter.php';
+
+/**
+ * Add Foundation Styled WordPress Pagination
+ */
+require get_template_directory() . '/scripts/Pagination.php';

@@ -67,41 +67,53 @@ get_header(); ?>
     </div>
 </div>
 
-
-<!-- Recent Updates -->
+<!-- Newsletter Section -->
 <div class="content-container smoke">
-    <h3 class="text-center">Most Recently Viewed Datasets</h3>
-    <div class="row">
-        <?php if($response = ckan_api_get("action/package_search?sort=views_total%20desc&rows=3")) : ?>
-            <?php foreach($response->results as $res) : ?>
-                <?php if(!$res->private) : ?>
-                    <div class="medium-4 columns">
-                        <h5><a href="<?php echo esc_url( ckan_url('dataset/'.$res->name) ); ?>"><?php echo $res->title; ?></a></h5>
-                        <p><?php echo wp_trim_words($res->notes, 35); ?></p>
+    <div class="row text-center">
+        <div class="large-12 columns">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/newsletter.png" />
+            <h3>Get Involved!</h3>
+            <p>Share your email to stay on top of the latest Data Center news and activities.</p>
+            <form class="newsletter" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" data-abide="ajax" autocomplete="off">
+                <?php wp_nonce_field('newsletter-register'); ?>
+                <div class="row collapse">
+                    <div class="small-9 columns">
+                        <label for="email">
+                            <input type="email" value="" name="email" placeholder="Your Email Address" required />
+                        </label>
+                        <small class="error">A valid email address is required.</small>
                     </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        <?php else : ?>
-            <div class="medium-12 columns text-center">
-                <p>Sorry, we couldn't fetch the most popular datasets at this time.</p>
-            </div>
-        <?php endif; ?>
+                    <div class="small-3 columns">
+                        <input type="submit" class="button postfix" value="Sign Up" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-
-<!-- Recent WP Posts -->
+<!-- Showcase Section -->
 <div class="content-container white">
     <div class="row">
         <div class="large-12 columns">
-            <h3>Latest WPRDC News</h3>
-            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 5, 'category__not_in' => get_cat_ID('showcase')), OBJECT) ) : ?>
-                <?php foreach($posts as $post) : ?>
-                    <div id="post-<?php echo $post-ID; ?>">
-                        <h4><a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
-                        <p><?php echo $post->post_content; ?></p>
-                    </div>
-                <?php endforeach; ?>
+            <h3>Data Center Showcase</h3>
+            <p>See what others have created using our data. <a href="<?php echo esc_url(get_category_link(get_cat_ID('showcase'))); ?>">Click here</a> to view all showcase items.</p>
+            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 10, 'category' => get_cat_ID('showcase')), OBJECT) ) : ?>
+                <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-5">
+                    <?php foreach($posts as $post) : ?>
+                        <?php if ( has_post_thumbnail() ) : ?>
+                            <li id="post-<?php echo $post-ID; ?>" class="showcase-item">
+                                <a href="<?php echo get_permalink($post->ID); ?>">
+                                    <div class="panel">
+                                        <?php the_post_thumbnail('thumbnail'); ?>
+                                        <p class="showcase-title"><?php echo $post->post_title; ?></p>
+                                        <p class="showcase-desc"><?php echo wp_trim_words( $post->post_content, 12 ); ?></p>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
             <?php else : ?>
                 <div id="no-posts">
                     <p>Nothing has been posted yet.</p>
@@ -116,7 +128,7 @@ get_header(); ?>
     <div class="row valign-middle">
         <div class="medium-9 columns">
             <h3>Build something amazing with our data!</h3>
-            <p>Using the WPRDC's API, you have direct access to the published datasets to create applications.</p>
+            <p>Using the Data Center's API, you have direct access to the published datasets to create applications.</p>
         </div>
         <div class="medium-3 columns text-center">
             <a href="http://ckan.readthedocs.org/en/ckan-2.4.0/api/index.html" target="_blank" class="button secondary no-margin">Learn More</a>
@@ -124,30 +136,28 @@ get_header(); ?>
     </div>
 </div>
 
-<!-- Showcase Section -->
+
+<!-- Recent Updates -->
 <div class="content-container white">
+    <h3 class="text-center">Most Viewed Datasets</h3>
     <div class="row">
-        <div class="large-12 columns">
-            <h3>WPRDC Showcase</h3>
-            <p>See what others have created using our data.</p>
-            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 10, 'category' => get_cat_ID('showcase')), OBJECT) ) : ?>
-            <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-5">
-                <?php foreach($posts as $post) : ?>
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <li id="post-<?php echo $post-ID; ?>">
-                            <a href="<?php echo get_permalink($post->ID); ?>" class="th">
-                                <?php the_post_thumbnail('thumbnail'); ?>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-            <?php else : ?>
-                <div id="no-posts">
-                    <p>Nothing has been posted yet.</p>
-                </div>
-            <?php endif; ?>
-        </div>
+        <?php if($response = ckan_api_get("action/package_search?sort=views_recent%20desc&rows=3")) : ?>
+            <?php foreach($response->results as $res) : ?>
+                <?php if(!$res->private) : ?>
+                    <div class="medium-4 columns">
+                        <h5><a href="<?php echo esc_url( ckan_url('dataset/'.$res->name) ); ?>"><?php echo $res->title; ?></a></h5>
+                        <p><?php echo wp_trim_words($res->notes, 35); ?></p>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <div class="medium-12 columns text-center">
+                <p>Sorry, we couldn't fetch the most popular datasets at this time.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="text-center">
+        <small>(most viewed over the last two weeks)</small>
     </div>
 </div>
 
@@ -164,32 +174,26 @@ get_header(); ?>
     </div>
 </div>
 
-
-<!-- Newsletter Section -->
+<!-- Recent WP Posts -->
 <div class="content-container white">
-    <div class="row text-center">
+    <div class="row">
         <div class="large-12 columns">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/newsletter.png" />
-        <h3>Join Our Newsletter!</h3>
-        <p>Sign up to our newsletter list to stay updated with news about the WPRDC.</p>
-        <form class="newsletter" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" data-abide="ajax" autocomplete="off">
-            <?php wp_nonce_field('newsletter-register'); ?>
-            <div class="row collapse">
-                <div class="small-9 columns">
-                    <label for="email">
-                        <input type="email" value="" name="email" placeholder="Your Email Address" required />
-                    </label>
-                    <small class="error">A valid email address is required.</small>
+            <h3>Latest Data Center News</h3>
+            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 5, 'category__not_in' => get_cat_ID('showcase')), OBJECT) ) : ?>
+                <?php foreach($posts as $post) : ?>
+                    <div id="post-<?php echo $post-ID; ?>">
+                        <h4><a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
+                        <p><?php echo wp_trim_words( $post->post_content ); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <div id="no-posts">
+                    <p>Nothing has been posted yet.</p>
                 </div>
-                <div class="small-3 columns">
-                    <input type="submit" class="button postfix" value="Sign Up" />
-                </div>
-            </div>
-        </form>
+            <?php endif; ?>
         </div>
     </div>
 </div>
-
 
 <!-- Latest Tweet Carousel -->
 <div id="latest-tweets">
