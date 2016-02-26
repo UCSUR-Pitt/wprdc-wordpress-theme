@@ -88,6 +88,15 @@ get_header(); ?>
                     </div>
                 </div>
             </form>
+            <div class="row collapse">
+                <div class="small-12 columns">
+                    <br>
+                    <p>Be part of our research by signing up for our registry.</p>
+                </div>
+            </div>
+            <div class="row collapse">
+                <a href="https://sbs.ucsur.pitt.edu/reg/?s=dc" target="_blank" class="button">Sign Up</a>
+            </div>
         </div>
     </div>
 </div>
