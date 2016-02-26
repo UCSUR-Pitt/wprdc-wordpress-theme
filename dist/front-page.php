@@ -95,7 +95,7 @@ get_header(); ?>
                 </div>
             </div>
             <div class="row collapse">
-                <a href="https://sbs.ucsur.pitt.edu/reg/?s=dc" target="_blank" class="button">Sign Up</a>
+                <a href="https://sbs.ucsur.pitt.edu/reg/?s=dc" target="_blank" class="button small">Sign Up</a>
             </div>
         </div>
     </div>
