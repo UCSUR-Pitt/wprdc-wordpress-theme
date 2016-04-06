@@ -10,21 +10,21 @@ get_header(); ?>
 <!-- Posts/Categories -->
 <div class="content-container">
     <div class="row">
-        <?php while ( have_posts() ) : the_post(); ?>
-        <article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
-            <h1><?php the_title(); ?></h1>
-            <hr>
-            <?php if ( has_post_thumbnail() ) : ?>
-                <div class="post-thumbnail-wrapper">
-                    <?php echo get_the_post_thumbnail(get_the_ID(), 'full'); ?>
+        <?php while (have_posts()) : the_post(); ?>
+            <article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
+                <h1><?php the_title(); ?></h1>
+                <hr>
+                <?php if (has_post_thumbnail()) : ?>
+                    <div class="post-thumbnail-wrapper">
+                        <?php echo get_the_post_thumbnail(get_the_ID(), 'full'); ?>
+                    </div>
+                    <br>
+                <?php endif; ?>
+                <div class="entry-content">
+                    <?php the_content(); ?>
                 </div>
                 <br>
-            <?php endif; ?>
-            <div class="entry-content">
-                <?php the_content(); ?>
-            </div>
-            <br>
-        </article>
+            </article>
         <?php endwhile; ?>
     </div>
 </div>

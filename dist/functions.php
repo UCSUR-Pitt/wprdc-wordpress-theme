@@ -2,10 +2,11 @@
 /**
  * Theme Initialization and Setup
  */
-function theme_init() {
+function theme_init()
+{
     // Register Custom Navigation Menu
     register_nav_menu('main-navigation', __('Main Navigation', 'wprdc'));
-    if(!get_option('wprdc_theme_setup_ran')) {
+    if (!get_option('wprdc_theme_setup_ran')) {
         // Create Theme's Default Pages
         create_default_pages_for_theme();
         // Add Option for Theme Initialized
@@ -13,7 +14,7 @@ function theme_init() {
     }
 
     // Allow Thumbnails/Featured Images
-    add_theme_support( 'post-thumbnails' );
+    add_theme_support('post-thumbnails');
 
     // Add Custom JS in Footer
     wp_enqueue_script('jquery');
@@ -21,46 +22,48 @@ function theme_init() {
     wp_enqueue_script('wprdc', get_template_directory_uri() . '/assets/js/app.js', array('jquery'), '0.0.1', true);
 
     // Add Custom Rewrite Rules
-    add_rewrite_rule('showcase/page/?([0-9]{1,})/?$','index.php?category_name=showcase&paged=$matches[1]','top');
+    add_rewrite_rule('showcase/page/?([0-9]{1,})/?$', 'index.php?category_name=showcase&paged=$matches[1]', 'top');
 }
-add_action( 'after_setup_theme', 'theme_init' );
+
+add_action('after_setup_theme', 'theme_init');
 
 /**
  * Create Default Wordpress Pages for Theme: About, Terms, Privacy, Contact
  */
-function create_default_pages_for_theme() {
+function create_default_pages_for_theme()
+{
     $pages = array(
         'about' => array(
-            'post_name'     => 'about',
-            'post_title'    => 'About',
-            'post_content'  => '',
-            'post_excerpt'  => '',
-            'post_type'     => 'page',
-            'post_status'   => 'publish'
+            'post_name' => 'about',
+            'post_title' => 'About',
+            'post_content' => '',
+            'post_excerpt' => '',
+            'post_type' => 'page',
+            'post_status' => 'publish'
         ),
         'contact' => array(
-            'post_name'     => 'contact',
-            'post_title'    => 'Contact',
-            'post_content'  => '',
-            'post_excerpt'  => '',
-            'post_type'     => 'page',
-            'post_status'   => 'publish'
+            'post_name' => 'contact',
+            'post_title' => 'Contact',
+            'post_content' => '',
+            'post_excerpt' => '',
+            'post_type' => 'page',
+            'post_status' => 'publish'
         ),
         'terms' => array(
-            'post_name'     => 'terms-of-use',
-            'post_title'    => 'Terms of Use',
-            'post_content'  => '',
-            'post_excerpt'  => '',
-            'post_type'     => 'page',
-            'post_status'   => 'publish'
+            'post_name' => 'terms-of-use',
+            'post_title' => 'Terms of Use',
+            'post_content' => '',
+            'post_excerpt' => '',
+            'post_type' => 'page',
+            'post_status' => 'publish'
         ),
         'privacy' => array(
-            'post_name'     => 'privacy-policy',
-            'post_title'    => 'Privacy Policy',
-            'post_content'  => '',
-            'post_excerpt'  => '',
-            'post_type'     => 'page',
-            'post_status'   => 'publish'
+            'post_name' => 'privacy-policy',
+            'post_title' => 'Privacy Policy',
+            'post_content' => '',
+            'post_excerpt' => '',
+            'post_type' => 'page',
+            'post_status' => 'publish'
         )
     );
     foreach ($pages as $page) {
@@ -73,10 +76,12 @@ function create_default_pages_for_theme() {
  *
  * @see /scripts/ThemeSettings.php
  */
-function theme_settings_add_page() {
+function theme_settings_add_page()
+{
     require get_template_directory() . '/scripts/ThemeSettings.php';
     new ThemeSettings();
 }
+
 add_action('admin_menu', 'theme_settings_add_page');
 
 /**
@@ -87,6 +92,7 @@ function enable_php_errors()
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
+
 //enable_php_errors();
 
 /**
@@ -99,8 +105,7 @@ function enable_php_errors()
 function ckan_api_get($url, $args = array())
 {
     $cache_key = $url;
-    if( !wincache_ucache_exists($cache_key) )
-    {
+    if (!wincache_ucache_exists($cache_key)) {
         $ckan_url = get_option('wprdc_theme_setting_ckan', 'http://opendata.ucsur.pitt.edu/data');
         $url = esc_url_raw($ckan_url . '/api/3/' . $url);
         $response = wp_remote_get($url, $args);
@@ -114,7 +119,7 @@ function ckan_api_get($url, $args = array())
         else
             $result = false;
 
-        wincache_ucache_set($cache_key,$result,1800);
+        wincache_ucache_set($cache_key, $result, 1800);
     }
 
     return wincache_ucache_get($cache_key);
@@ -133,6 +138,21 @@ function ckan_url($url = '')
     return $url;
 }
 
+/**
+ *
+ */
+function pick_viz()
+{
+    $visuals =
+        array(
+            'https://wprdc.cartodb.com/viz/24397410-dccd-11e5-82a8-0ea31932ec1d/embed_map'
+            #'https://wprdc.cartodb.com/viz/139ce56c-defb-11e5-b99e-0e674067d321/embed_map',
+            #'https://wprdc.cartodb.com/viz/908f1446-dcc6-11e5-84f7-0ecd1babdde5/embed_map',
+            # 'https://wprdc.cartodb.com/viz/d9a0c288-d4ba-11e5-b4b0-0e3ff518bd15/embed_map'
+        );
+    $x = array_rand($visuals, 1);
+    return $visuals[$x];
+}
 
 /**
  * Enable Twitter API script to be accessed on scripts

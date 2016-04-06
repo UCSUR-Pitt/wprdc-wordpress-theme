@@ -10,7 +10,7 @@ get_header(); ?>
         <div class="row">
             <div class="large-12 columns">
                 <section id="single-post">
-                    <?php while ( have_posts() ) : the_post(); ?>
+                    <?php while (have_posts()) : the_post(); ?>
                         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                             <h1><?php the_title(); ?></h1>
                             <hr>
@@ -23,7 +23,7 @@ get_header(); ?>
                                     <?php the_date(); ?>
                                 </p>
                             </div>
-                            <?php if ( has_post_thumbnail() ) : ?>
+                            <?php if (has_post_thumbnail()) : ?>
                                 <div class="post-thumbnail-wrapper">
                                     <?php echo get_the_post_thumbnail(get_the_ID(), 'large'); ?>
                                 </div>
