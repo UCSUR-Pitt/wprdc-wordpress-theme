@@ -15,7 +15,7 @@ get_header(); ?>
         <h3><a target="_blank" href="https://wprdc.cartodb.com/viz/24397410-dccd-11e5-82a8-0ea31932ec1d/public_map">See
                 the Map!</a></h3>
     </div>
-    <div id="map-box">
+    <div id="map-box" style="height: 280px; width: 100%;">
     </div>
 </div>
 
@@ -28,10 +28,11 @@ get_header(); ?>
         <div class="medium-4 medium-centered columns">
             <hr>
         </div>
+
         <h3 class="text-center">Find the data you need!</h3>
         <?php if ($response = ckan_api_get("action/package_search")) : ?>
             <p class="text-center"><?php echo $response->count; ?>
-                dataset<?php echo($response->count > 1 ? 's' : ''); ?> and growing</p>
+                dataset<?php echo($response->count > 1 ? 's' : ''); ?> andgrowing</p>
         <?php endif; ?>
         <div class="medium-6 medium-centered columns">
             <form method="get" action="https://data.wprdc.org/dataset">
@@ -51,19 +52,89 @@ get_header(); ?>
 </div>
 
 
-
+<!-- Selection Section -->
+<div class="content-container">
+    <div class="row">
+        <ul class="small-block-grid-2 medium-block-grid-2 large-block-grid-4">
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#data-categories">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">explore</i>
+                        <h3 class="menu-item-title">Explore</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-involved">
+                <a class="main-menu-item" href="#get-involved">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">hot_tub</i>
+                        <h3 class="menu-item-title">Get Involved</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#showcase">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">assessment</i>
+                        <h3 class="menu-item-title">Showcase</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#api-section">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">developer_mode</i>
+                        <h3 class="menu-item-title">Build Stuff</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#popular-datasets">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">whatshot</i>
+                        <h3 class="menu-item-title">Hot Datasets</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#data-requests">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">question_answer</i>
+                        <h3 class="menu-item-title">Requests</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#recent-blog-posts">
+                    <div class="panel main-menu">
+                        <i class="material-icons menu-icon">subject</i>
+                        <h3 class="menu-item-title">News</h3>
+                    </div>
+                </a>
+            </li>
+            <li id="menu-groups">
+                <a class="main-menu-item" href="#latest-tweets">
+                    <div class="panel main-menu">
+                        <i class="fa fa-twitter menu-icon"></i>
+                        <h3 class="menu-item-title">Tweets!</h3>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <!-- Categories/Groups -->
 <div id="data-categories" class="offset content-container">
 
     <div class="row">
-        <h3>Explore</h3>
+        <h3 class="text-center">Explore</h3>
     </div>
     <div class="row">
-        <div class="small-6 columns">
+        <div class="small-12 columns">
 
             <h4>Groups/Topics</h4>
-            <ul class="large-block-grid-2 small-block-grid-1">
+            <ul class="large-block-grid-4 small-block-grid-1">
                 <?php if ($response = ckan_api_get("action/group_list?all_fields=true")) : ?>
                     <?php foreach ($response as $group) : ?>
                         <li>
@@ -75,9 +146,9 @@ get_header(); ?>
                 <?php endif; ?>
             </ul>
         </div>
-        <div class="small-6 columns">
+        <div class="small-12 columns">
             <h4>Organizations</h4>
-            <ul class="large-block-grid-2 small-block-grid-1">
+            <ul class="large-block-grid-4 small-block-grid-1">
                 <?php if ($response = ckan_api_get("action/organization_list?all_fields=true")) : ?>
                     <?php foreach ($response as $res) : ?>
                         <li>
@@ -94,7 +165,7 @@ get_header(); ?>
 </div>
 
 <!-- Newsletter Section -->
-<div id="get-involved" class="offset content-container smoke">
+<div id="get-involved" class="offset content-container dark">
     <div class="row text-center animateme"
          data-when="span"
          data-from="0"
@@ -102,8 +173,6 @@ get_header(); ?>
          data-opacity="0"
     >
         <div class="large-12 columns">
-            <img id="newsletter-icon" src="<?php echo get_template_directory_uri(); ?>/assets/img/Envelope.png"
-                 height="128" width="250"/>
             <h3>Get Involved!</h3>
             <p>Share your email to stay on top of the latest Data Center news and activities.</p>
             <form class="newsletter" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" data-abide="ajax"
@@ -155,11 +224,11 @@ get_header(); ?>
                 <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-5">
                     <?php foreach ($posts as $post) : ?>
                         <?php if (has_post_thumbnail()) : ?>
-                            <li id="post-<?php echo $post->ID; ?>" class="showcase-item"
+                            <li id="post-<?php echo $post - ID; ?>" class="showcase-item"
                                 data-bottom-top="opacity: 0; transform: translateY(200px);"
                                 data-center-top="opacity: 1; transform: translateY(0px);">
                                 <a href="<?php echo get_permalink($post->ID); ?>">
-                                    <div class="groups">
+                                    <div class="panel">
                                         <?php the_post_thumbnail('thumbnail'); ?>
                                         <p class="showcase-title"><?php echo $post->post_title; ?></p>
                                         <p class="showcase-desc"><?php echo wp_trim_words($post->post_content, 12); ?></p>
@@ -220,7 +289,7 @@ get_header(); ?>
 </div>
 
 <!-- Data Request -->
-<div id="data-requests" class="content-container smoke">
+<div id="data-requests" class="content-container dark">
     <div class="row valign-middle">
         <div class="medium-9 columns">
             <h3>What dataset would you like to see?</h3>
@@ -313,15 +382,17 @@ get_header(); ?>
 </script>
 
 <script>
+    var scrolling = false;
     $(".main-menu-item").on('click', function () {
         var destination = $(this).attr('href');
+        scrolling = true;
         $("html, body").animate({scrollTop: $(destination).offset().top - 54}, 800);
     });
     $(document).ready(function () {
         $(".scroll-to-top").hide();
         //Check to see if the window is top if not then display button
         $(window).scroll(function () {
-            if ($(this).scrollTop() > $('#main-title').offset().top ) {
+            if ($(this).scrollTop() > $('#main-title').offset().top - 54) {
                 $(".scroll-to-top").fadeIn();
             } else {
                 $(".scroll-to-top").fadeOut();
@@ -331,7 +402,7 @@ get_header(); ?>
         //Click event to scroll to top
         $(".scroll-to-top").click(function () {
             $("html, body").animate({scrollTop: $('#main-title').offset().top - 54}, 800);
-            return false;
+            scrolling = true;
         });
     });
 </script>

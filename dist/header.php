@@ -20,7 +20,7 @@
     <script src="<?php echo get_template_directory_uri(); ?>/assets/js/modernizr.js"></script>
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <?php wp_head(); ?>
 <body>
@@ -41,6 +41,7 @@
                         </a>
                     </h1>
                 </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
             </ul>
             <section class="top-bar-section">
                 <?php

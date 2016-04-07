@@ -27,8 +27,12 @@
     &.light-blue {
       background: $wprdc-blue;
     }
-    &.smoke {
-      background: $smoke;
+    &.dark {
+      h3 {
+        color: $white;
+      }
+      color: $wprdc-blue;
+      background: $jet;
     }
     &.oil {
       background: $oil;
@@ -50,7 +54,7 @@
     img {
       margin-bottom: rem-calc(3);
       border: solid 4px #fff;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
       display: inline-block;
       line-height: 0;
       max-width: 100%;
@@ -73,14 +77,14 @@
   }
   .category-item {
     @include panel(
-      $bg: $ghost,
-      $padding:20px,
-      $adjust:true
+            $bg: $ghost,
+            $padding: 20px,
+            $adjust: true
     );
     img {
       margin: rem-calc(0 9 5 0);
       border: solid 4px #fff;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
       display: inline-block;
       line-height: 0;
       max-width: 100%;
@@ -103,9 +107,6 @@
     margin: 0;
   }
 }
-
-
-
 
 // 02. Latest Tweets
 // - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,4 +169,82 @@
       margin: 7px 0px 5px;
     }
   }
+}
+
+.scroll-to-top {
+  display: none;
+  position: fixed;
+  top: 60px;
+  font-weight: 700;
+  right: 25px;
+  color: $wprdc-blue;
+  padding: 5px;
+  text-align: center;
+  background-color: $jet;
+  z-index:75;
+}
+
+.scroll-to-top:hover {
+  text-decoration: none;
+}
+
+.material-icons.menu-icon {
+  font-size: 48pt;
+  text-align: center;
+  i {
+    text-align: center;
+  }
+}
+
+.fa.menu-icon {
+  font-size: 48pt;
+  text-align: center;
+  i {
+    text-align: center;
+  }
+  min-height: 64px;
+}
+
+#newletter-icon{
+  font-size: 64pt;
+  text-align: center
+}
+
+.leaflet-bottom {
+  z-index: 50 !important;
+}
+
+.map-header {
+  position: relative;
+}
+
+.floating-text {
+  background-color: transparentize($jet, .3);
+  z-index: 50;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#top-title {
+  span {
+    font-size: 2.8rem;
+  }
+  margin-top: -7px;
+}
+
+#title1 {
+  color: $wprdc-blue;
+}
+
+#main-title {
+  text-align: center;
+}
+
+.main-menu {
+  text-align: center;
+}
+
+.leaflet-bottom, .cartodb-logo {
+  z-index: 50 !important;
 }
