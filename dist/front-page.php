@@ -32,7 +32,7 @@ get_header(); ?>
         <h3 class="text-center">Find the data you need!</h3>
         <?php if ($response = ckan_api_get("action/package_search")) : ?>
             <p class="text-center"><?php echo $response->count; ?>
-                dataset<?php echo($response->count > 1 ? 's' : ''); ?> andgrowing</p>
+                dataset<?php echo($response->count > 1 ? 's' : ''); ?> and growing</p>
         <?php endif; ?>
         <div class="medium-6 medium-centered columns">
             <form method="get" action="https://data.wprdc.org/dataset">
