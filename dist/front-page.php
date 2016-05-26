@@ -188,8 +188,9 @@ get_header(); ?>
     <div class="row">
         <div class="large-12 columns">
             <h3>Latest Data Center News</h3>
-            <?php if ( $posts = wp_get_recent_posts(array('numberposts' => 5, 'category__not_in' => get_cat_ID('showcase')), OBJECT) ) : ?>
-                <?php foreach($posts as $post) : ?>
+            <?php if ( $posts = wp_get_recent_posts(array('post_status'=>'publish', 'numberposts' => 5, 'category__not_in' => get_cat_ID('showcase')), OBJECT) ) : ?>
+                <?php foreach($posts as $post) :?>
+
                     <div id="post-<?php echo $post-ID; ?>">
                         <h4><a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></h4>
                         <p><?php echo wp_trim_words( $post->post_content ); ?></p>
